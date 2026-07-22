@@ -442,7 +442,7 @@
 
   <div class="footer">
     <span>guest@blog:~$ end_of_file<span class="cursor2"></span></span>
-    <span><a href="https://github.com/JeeT-Suhrid2003" onclick="return false;">github</a> · <a href="https://x.com/JEeT_suhrid" onclick="return false;">x</a></span>
+    <span><a href="#" onclick="return false;">github</a> · <a href="#" onclick="return false;">rss</a></span>
   </div>
 
 </div>
@@ -698,32 +698,50 @@
 
   function todayStr(){ return new Date().toISOString().slice(0,10); }
 
-  // ---------- persistence ----------
+  // ---------- persistence (Cloudflare Pages Function + KV) ----------
+  // GET  /api/posts  is public and returns everything that's been saved.
+  // POST /api/posts  requires the admin key (see the compose view).
   async function loadCustomPosts(){
     try{
-      const list = await window.storage.list('post:', false);
-      if (!list || !list.keys || !list.keys.length) return [];
-      const entries = [];
-      for (const key of list.keys){
-        try{
-          const res = await window.storage.get(key, false);
-          if (res && res.value) entries.push(JSON.parse(res.value));
-        }catch(e){ /* skip unreadable entry */ }
-      }
-      return entries;
+      const res = await fetch('/api/posts');
+      if (!res.ok) return [];
+      const posts = await res.json();
+      return Array.isArray(posts) ? posts : [];
     }catch(e){
-      console.error('Could not load saved posts:', e);
+      console.error('Could not load saved posts (API not reachable yet — normal until deployed):', e);
       return [];
     }
   }
 
+  function getAdminKey(){
+    return localStorage.getItem('blog_admin_key') || '';
+  }
+  function setAdminKey(key){
+    localStorage.setItem('blog_admin_key', key);
+  }
+
   async function savePost(data){
-    const key = `post:${data.id}`;
+    let adminKey = getAdminKey();
+    if (!adminKey){
+      adminKey = prompt('Enter your admin key to publish:') || '';
+      if (adminKey) setAdminKey(adminKey);
+    }
+
     try{
-      const result = await window.storage.set(key, JSON.stringify(data), false);
-      if (!result) console.error('Save returned no result');
+      const res = await fetch('/api/posts', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json', 'x-admin-key': adminKey },
+        body: JSON.stringify(data)
+      });
+      if (res.status === 401){
+        alert('Wrong admin key — this post was not saved to the server. It will disappear on refresh.');
+        localStorage.removeItem('blog_admin_key');
+      } else if (!res.ok){
+        alert('Something went wrong saving this post to the server.');
+      }
     }catch(e){
       console.error('Storage error while saving post:', e);
+      alert('Could not reach the server to save this post (check your deployment / KV setup).');
     }
   }
 
