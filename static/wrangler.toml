@@ -5,7 +5,7 @@ compatibility_date = "2026-07-01"
 # Serves everything in ./public as static files.
 # Requests to /api/posts are intercepted by worker.js before reaching assets.
 [assets]
-directory = "./public"
+directory = "./static/public"
 binding = "ASSETS"
 
 # Run the Worker script first so /api/posts is handled before falling back
