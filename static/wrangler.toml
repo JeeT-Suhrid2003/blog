@@ -1,0 +1,21 @@
+name = "my-blog"
+main = "worker.js"
+compatibility_date = "2026-07-01"
+
+# Serves everything in ./public as static files.
+# Requests to /api/posts are intercepted by worker.js before reaching assets.
+[assets]
+directory = "./public"
+binding = "ASSETS"
+
+# Run the Worker script first so /api/posts is handled before falling back
+# to static files. Adjust the pattern if you rename the API path.
+[[assets.run_worker_first]]
+pattern = "/api/*"
+
+# KV namespace for storing posts.
+# Replace "id" below with the ID you get from:
+#   npx wrangler kv namespace create POSTS_KV
+[[kv_namespaces]]
+binding = "POSTS_KV"
+id = "bdf15e9611c44547a00ff98c91d36467"
