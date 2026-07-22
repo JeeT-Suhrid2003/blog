@@ -25,7 +25,6 @@
   }
 
   *{ box-sizing:border-box; margin:0; padding:0; }
-
   html{ scroll-behavior:smooth; }
 
   body{
@@ -42,7 +41,6 @@
 
   .mono{ font-family:'JetBrains Mono', monospace; }
 
-  /* faint scanline texture */
   body::before{
     content:"";
     position:fixed; inset:0;
@@ -80,10 +78,7 @@
 
   .term-body{ padding:38px 34px 34px; }
 
-  .prompt-line{
-    font-size:13.5px;
-    color:var(--text-mute);
-  }
+  .prompt-line{ font-size:13.5px; color:var(--text-mute); }
   .prompt-line .sym{ color:var(--orange); }
 
   h1.hero{
@@ -104,12 +99,7 @@
   }
   @keyframes blink{ 50%{ opacity:0; } }
 
-  .hero-sub{
-    color:var(--text-dim);
-    font-size:15.5px;
-    max-width:52ch;
-    margin-bottom:22px;
-  }
+  .hero-sub{ color:var(--text-dim); font-size:15.5px; max-width:52ch; margin-bottom:22px; }
 
   .stats{
     display:flex; gap:26px; flex-wrap:wrap;
@@ -122,10 +112,12 @@
   .stats b{ color:var(--orange); font-weight:700; }
 
   /* ---------- nav / filters ---------- */
-  .nav{
-    display:flex; gap:6px; flex-wrap:wrap;
+  .nav-row{
+    display:flex; justify-content:space-between; align-items:center;
+    gap:12px; flex-wrap:wrap;
     margin:36px 0 26px;
   }
+  .nav{ display:flex; gap:6px; flex-wrap:wrap; }
   .nav button{
     font-family:'JetBrains Mono', monospace;
     font-size:12.5px;
@@ -145,107 +137,6 @@
     font-weight:600;
   }
 
-  /* ---------- post cards ---------- */
-  .feed{ display:flex; flex-direction:column; gap:16px; }
-
-  .post{
-    background:var(--surface);
-    border:1px solid var(--line);
-    border-left:3px solid var(--orange-dim);
-    border-radius:8px;
-    padding:22px 24px;
-    transition:transform .15s ease, border-color .15s ease, background .15s ease;
-    cursor:default;
-  }
-  .post:hover{
-    transform:translateX(3px);
-    border-left-color:var(--orange);
-    background:var(--surface-2);
-  }
-  .post[data-type="project"]{ border-left-color:var(--orange); }
-  .post[data-type="note"]{ border-left-color:var(--text-mute); }
-
-  .post-meta{
-    display:flex; align-items:center; gap:10px;
-    font-family:'JetBrains Mono', monospace;
-    font-size:11.5px;
-    color:var(--text-mute);
-    margin-bottom:10px;
-    flex-wrap:wrap;
-  }
-  .kind{
-    padding:2px 8px;
-    border-radius:4px;
-    font-weight:700;
-    letter-spacing:0.03em;
-  }
-  .kind.project{ background:rgba(255,138,61,0.14); color:var(--orange); }
-  .kind.note{ background:rgba(163,144,122,0.12); color:var(--text-dim); }
-
-  .post-title{
-    font-family:'JetBrains Mono', monospace;
-    font-size:17px;
-    font-weight:700;
-    color:var(--text);
-    margin-bottom:8px;
-  }
-  .post-title .ext{ color:var(--text-mute); font-weight:500; }
-
-  .post-body{
-    color:var(--text-dim);
-    font-size:14.5px;
-    margin-bottom:14px;
-  }
-
-  .tags{ display:flex; gap:8px; flex-wrap:wrap; }
-  .tag{
-    font-family:'JetBrains Mono', monospace;
-    font-size:11px;
-    color:var(--orange-dim);
-  }
-  .tag::before{ content:"#"; opacity:0.6; }
-
-  .status{
-    font-family:'JetBrains Mono', monospace;
-    font-size:11px;
-    padding:2px 8px;
-    border-radius:4px;
-    border:1px solid var(--line);
-  }
-  .status.done{ color:var(--green); border-color:rgba(123,196,127,0.3); }
-  .status.wip{ color:var(--orange); border-color:rgba(255,138,61,0.3); }
-
-  /* ---------- footer ---------- */
-  .footer{
-    margin-top:60px;
-    padding-top:24px;
-    border-top:1px dashed var(--line);
-    font-family:'JetBrains Mono', monospace;
-    font-size:12.5px;
-    color:var(--text-mute);
-    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;
-  }
-  .footer .cursor2{
-    display:inline-block; width:8px; height:14px; background:var(--orange);
-    vertical-align:middle; margin-left:4px;
-    animation:blink 1s step-end infinite;
-  }
-  .footer a{ color:var(--text-dim); text-decoration:none; }
-  .footer a:hover{ color:var(--orange); }
-
-  @media (max-width:560px){
-    .term-body{ padding:28px 20px 24px; }
-    .stats{ gap:16px; }
-  }
-
-  /* ---------- new-post button ---------- */
-  .nav-row{
-    display:flex; justify-content:space-between; align-items:center;
-    gap:12px; flex-wrap:wrap;
-    margin:36px 0 26px;
-  }
-  .nav{ margin:0; }
-
   .btn-add{
     font-family:'JetBrains Mono', monospace;
     font-size:12.5px;
@@ -260,6 +151,123 @@
     white-space:nowrap;
   }
   .btn-add:hover{ background:var(--orange-2); border-color:var(--orange-2); }
+
+  /* ---------- post cards (snippets) ---------- */
+  .feed{ display:flex; flex-direction:column; gap:16px; }
+
+  .post{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-left:3px solid var(--orange-dim);
+    border-radius:8px;
+    padding:22px 24px;
+    transition:transform .15s ease, border-color .15s ease, background .15s ease;
+  }
+  .post:hover{ transform:translateX(3px); border-left-color:var(--orange); background:var(--surface-2); }
+  .post[data-type="project"]{ border-left-color:var(--orange); }
+  .post[data-type="note"]{ border-left-color:var(--text-mute); }
+
+  .post-meta{
+    display:flex; align-items:center; gap:10px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11.5px;
+    color:var(--text-mute);
+    margin-bottom:10px;
+    flex-wrap:wrap;
+  }
+  .kind{ padding:2px 8px; border-radius:4px; font-weight:700; letter-spacing:0.03em; }
+  .kind.project{ background:rgba(255,138,61,0.14); color:var(--orange); }
+  .kind.note{ background:rgba(163,144,122,0.12); color:var(--text-dim); }
+
+  .post-title-link{ text-decoration:none; }
+  .post-title{
+    font-family:'JetBrains Mono', monospace;
+    font-size:17px;
+    font-weight:700;
+    color:var(--text);
+    margin-bottom:8px;
+    transition:color .15s ease;
+  }
+  .post-title-link:hover .post-title{ color:var(--orange); }
+  .post-title .ext{ color:var(--text-mute); font-weight:500; }
+
+  .post-body{ color:var(--text-dim); font-size:14.5px; margin-bottom:14px; }
+
+  .read-more{
+    display:inline-block;
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    font-weight:600;
+    color:var(--orange);
+    text-decoration:none;
+    margin-bottom:14px;
+  }
+  .read-more:hover{ color:var(--orange-2); }
+
+  .tags{ display:flex; gap:8px; flex-wrap:wrap; }
+  .tag{ font-family:'JetBrains Mono', monospace; font-size:11px; color:var(--orange-dim); }
+  .tag::before{ content:"#"; opacity:0.6; }
+
+  .status{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    padding:2px 8px;
+    border-radius:4px;
+    border:1px solid var(--line);
+  }
+  .status.done{ color:var(--green); border-color:rgba(123,196,127,0.3); }
+  .status.wip{ color:var(--orange); border-color:rgba(255,138,61,0.3); }
+
+  .empty-state{
+    font-family:'JetBrains Mono', monospace;
+    font-size:13px;
+    color:var(--text-mute);
+    padding:30px 20px;
+    text-align:center;
+    border:1px dashed var(--line);
+    border-radius:8px;
+  }
+
+  /* ---------- single post page ---------- */
+  .post-page{ display:none; }
+  .post-page.active{ display:block; }
+  .back-link{
+    display:inline-flex; align-items:center; gap:6px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:12.5px;
+    color:var(--text-dim);
+    text-decoration:none;
+    margin:36px 0 20px;
+  }
+  .back-link:hover{ color:var(--orange); }
+
+  .post-page-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-left:3px solid var(--orange-dim);
+    border-radius:10px;
+    padding:36px 34px;
+  }
+  .post-page-card[data-type="project"]{ border-left-color:var(--orange); }
+  .post-page-card[data-type="note"]{ border-left-color:var(--text-mute); }
+
+  .post-page-title{
+    font-family:'JetBrains Mono', monospace;
+    font-size:clamp(22px, 4vw, 30px);
+    font-weight:800;
+    color:var(--text);
+    margin:14px 0 20px;
+  }
+  .post-page-title .ext{ color:var(--text-mute); font-weight:500; }
+
+  .post-page-body{
+    color:var(--text-dim);
+    font-size:15.5px;
+    white-space:pre-wrap;
+    margin-bottom:26px;
+    padding-top:20px;
+    border-top:1px dashed var(--line);
+  }
 
   /* ---------- modal ---------- */
   .modal-overlay{
@@ -283,7 +291,6 @@
     box-shadow:0 30px 60px -20px rgba(0,0,0,0.7);
     overflow:hidden;
   }
-  .modal .term-bar{ cursor:default; }
   .modal-close{
     margin-left:auto;
     background:none; border:none;
@@ -306,9 +313,7 @@
     margin-bottom:6px;
     letter-spacing:0.02em;
   }
-  .field input[type="text"],
-  .field textarea,
-  .field select{
+  .field input[type="text"], .field textarea, .field select{
     width:100%;
     background:var(--bg-alt);
     border:1px solid var(--line);
@@ -319,9 +324,7 @@
     font-size:13px;
     outline:none;
   }
-  .field input[type="text"]:focus,
-  .field textarea:focus,
-  .field select:focus{ border-color:var(--orange-dim); }
+  .field input[type="text"]:focus, .field textarea:focus, .field select:focus{ border-color:var(--orange-dim); }
   .field textarea{ resize:vertical; min-height:80px; line-height:1.5; }
 
   .field-row{ display:flex; gap:12px; }
@@ -329,8 +332,7 @@
 
   .radio-row{ display:flex; gap:10px; }
   .radio-opt{
-    flex:1;
-    text-align:center;
+    flex:1; text-align:center;
     padding:9px 10px;
     border:1px solid var(--line);
     border-radius:6px;
@@ -341,16 +343,11 @@
     transition:all .15s ease;
   }
   .radio-opt input{ display:none; }
-  .radio-opt.checked{
-    border-color:var(--orange);
-    color:var(--orange);
-    background:rgba(255,138,61,0.08);
-  }
+  .radio-opt.checked{ border-color:var(--orange); color:var(--orange); background:rgba(255,138,61,0.08); }
 
   .modal-actions{
     display:flex; justify-content:flex-end; gap:10px;
-    margin-top:22px;
-    padding-top:18px;
+    margin-top:22px; padding-top:18px;
     border-top:1px dashed var(--line);
   }
   .btn-secondary{
@@ -377,14 +374,28 @@
   }
   .btn-submit:hover{ background:var(--orange-2); border-color:var(--orange-2); }
 
-  .empty-state{
+  /* ---------- footer ---------- */
+  .footer{
+    margin-top:60px;
+    padding-top:24px;
+    border-top:1px dashed var(--line);
     font-family:'JetBrains Mono', monospace;
-    font-size:13px;
+    font-size:12.5px;
     color:var(--text-mute);
-    padding:30px 20px;
-    text-align:center;
-    border:1px dashed var(--line);
-    border-radius:8px;
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;
+  }
+  .footer .cursor2{
+    display:inline-block; width:8px; height:14px; background:var(--orange);
+    vertical-align:middle; margin-left:4px;
+    animation:blink 1s step-end infinite;
+  }
+  .footer a{ color:var(--text-dim); text-decoration:none; }
+  .footer a:hover{ color:var(--orange); }
+
+  @media (max-width:560px){
+    .term-body{ padding:28px 20px 24px; }
+    .stats{ gap:16px; }
+    .post-page-card{ padding:26px 22px; }
   }
 </style>
 </head>
@@ -401,109 +412,32 @@
       <div class="prompt-line mono"><span class="sym">$</span> whoami</div>
       <h1 class="hero">notes<span class="accent">.log</span><span class="cursor">&nbsp;</span></h1>
       <p class="hero-sub">Small projects, half-finished experiments, and whatever I learned today. Updated whenever something works — or breaks in an interesting way.</p>
-      <!-- <div class="stats">
-        <span><b>12</b> projects shipped</span>
-        <span><b>47</b> daily notes</span>
-        <span><b>3</b> currently building</span>
-      </div> -->
+      <div class="stats" id="statsRow">
+        <span><b id="statProjects">0</b> projects shipped</span>
+        <span><b id="statNotes">0</b> daily notes</span>
+        <span><b id="statWip">0</b> currently building</span>
+      </div>
     </div>
   </div>
 
-  <div class="nav-row">
-    <nav class="nav mono">
-      <button class="active" data-filter="all">$ ls ./all</button>
-      <button data-filter="project">$ ls ./projects</button>
-      <button data-filter="note">$ ls ./notes</button>
-    </nav>
-    <button class="btn-add" id="openModal" style="display:none;">+ new post</button>
+  <!-- ================= HOME VIEW ================= -->
+  <div id="homeView">
+    <div class="nav-row">
+      <nav class="nav mono">
+        <button class="active" data-filter="all">$ ls ./all</button>
+        <button data-filter="project">$ ls ./projects</button>
+        <button data-filter="note">$ ls ./notes</button>
+      </nav>
+      <button class="btn-add" id="openModal" style="display:none;">+ new post</button>
+    </div>
+
+    <div class="feed" id="feed"></div>
   </div>
 
-  <div class="feed" id="feed">
-
-    <article class="post" data-type="project">
-      <div class="post-meta">
-        <span class="kind project">project</span>
-        <span>2026-07-18</span>
-        <span class="status done">shipped</span>
-      </div>
-      <div class="post-title">habit-tracker<span class="ext">.py</span></div>
-      <p class="post-body">A terminal-based habit tracker that logs streaks to a local SQLite file and yells at me in ASCII art if I skip two days in a row. Built it in a weekend after forgetting to water my plants for the fifth time.</p>
-      <div class="tags">
-        <span class="tag">python</span>
-        <span class="tag">sqlite</span>
-        <span class="tag">cli</span>
-      </div>
-    </article>
-
-    <article class="post" data-type="note">
-      <div class="post-meta">
-        <span class="kind note">note</span>
-        <span>2026-07-17</span>
-      </div>
-      <div class="post-title">today.md</div>
-      <p class="post-body">Spent way too long debugging a race condition that turned out to be a missing `await`. Reminder to self: read the stack trace top to bottom before assuming it's the database's fault.</p>
-      <div class="tags">
-        <span class="tag">debugging</span>
-        <span class="tag">async</span>
-      </div>
-    </article>
-
-    <article class="post" data-type="project">
-      <div class="post-meta">
-        <span class="kind project">project</span>
-        <span>2026-07-12</span>
-        <span class="status wip">in progress</span>
-      </div>
-      <div class="post-title">markdown-blog-engine<span class="ext">.js</span></div>
-      <p class="post-body">A tiny static site generator that turns a folder of markdown files into this exact blog. No build tools, no dependencies, just Node's fs module and a lot of stubbornness.</p>
-      <div class="tags">
-        <span class="tag">javascript</span>
-        <span class="tag">node</span>
-        <span class="tag">static-site</span>
-      </div>
-    </article>
-
-    <article class="post" data-type="note">
-      <div class="post-meta">
-        <span class="kind note">note</span>
-        <span>2026-07-09</span>
-      </div>
-      <div class="post-title">today.md</div>
-      <p class="post-body">Learned that CSS `gap` works on flexbox now in every browser I actually care about. Deleted about thirty margin hacks. Good day.</p>
-      <div class="tags">
-        <span class="tag">css</span>
-        <span class="tag">til</span>
-      </div>
-    </article>
-
-    <article class="post" data-type="project">
-      <div class="post-meta">
-        <span class="kind project">project</span>
-        <span>2026-06-30</span>
-        <span class="status done">shipped</span>
-      </div>
-      <div class="post-title">weather-cli<span class="ext">.rs</span></div>
-      <p class="post-body">My first real Rust project — a command-line weather app that fits the forecast into a tiny box-drawing UI. Mostly built as an excuse to finally understand the borrow checker.</p>
-      <div class="tags">
-        <span class="tag">rust</span>
-        <span class="tag">api</span>
-        <span class="tag">learning</span>
-      </div>
-    </article>
-
-    <article class="post" data-type="note">
-      <div class="post-meta">
-        <span class="kind note">note</span>
-        <span>2026-06-24</span>
-      </div>
-      <div class="post-title">today.md</div>
-      <p class="post-body">Rubber-ducked a bug to my actual rubber duck for ten minutes before realizing the duck was right and I was passing the wrong index.</p>
-      <div class="tags">
-        <span class="tag">rubber-duck</span>
-        <span class="tag">oops</span>
-      </div>
-    </article>
-
+  <!-- ================= SINGLE POST VIEW ================= -->
+  <div id="postView" class="post-page">
+    <a href="#" class="back-link mono">&larr; back to all posts</a>
+    <div class="post-page-card" id="postPageCard"></div>
   </div>
 
   <div class="footer">
@@ -513,6 +447,7 @@
 
 </div>
 
+<!-- ================= COMPOSE MODAL ================= -->
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal">
     <div class="term-bar">
@@ -522,7 +457,6 @@
     </div>
     <div class="modal-body">
       <form id="postForm">
-
         <div class="field">
           <label>type</label>
           <div class="radio-row">
@@ -578,29 +512,162 @@
 </div>
 
 <script>
-  const feed = document.getElementById('feed');
-  const navButtons = document.querySelectorAll('.nav button');
+  // ---------- seed data (shown even with no saved posts) ----------
+  const seedPosts = [
+    { id:'p1', type:'project', date:'2026-07-18', status:'done', title:'habit-tracker', ext:'.py',
+      body:'A terminal-based habit tracker that logs streaks to a local SQLite file and yells at me in ASCII art if I skip two days in a row. Built it in a weekend after forgetting to water my plants for the fifth time.\n\nThe core idea was simple: one command to log a habit, one to check streaks. I ended up spending most of the weekend on the ASCII art instead of the actual logic, which feels about right for a side project.',
+      tags:['python','sqlite','cli'], createdAt: new Date('2026-07-18').getTime() },
+    { id:'p2', type:'note', date:'2026-07-17', status:'', title:'today', ext:'.md',
+      body:"Spent way too long debugging a race condition that turned out to be a missing `await`. Reminder to self: read the stack trace top to bottom before assuming it's the database's fault.\n\nAlso discovered that adding a single console.log can sometimes change timing enough to hide the bug entirely, which is its own special kind of frustrating.",
+      tags:['debugging','async'], createdAt: new Date('2026-07-17').getTime() },
+    { id:'p3', type:'project', date:'2026-07-12', status:'wip', title:'markdown-blog-engine', ext:'.js',
+      body:"A tiny static site generator that turns a folder of markdown files into a blog just like this one. No build tools, no dependencies, just Node's fs module and a lot of stubbornness.\n\nCurrently it can read a folder, parse front-matter, and spit out HTML. Next up: templating so I stop copy-pasting the same header into every file by hand.",
+      tags:['javascript','node','static-site'], createdAt: new Date('2026-07-12').getTime() },
+    { id:'p4', type:'note', date:'2026-07-09', status:'', title:'today', ext:'.md',
+      body:"Learned that CSS `gap` works on flexbox now in every browser I actually care about. Deleted about thirty margin hacks. Good day.",
+      tags:['css','til'], createdAt: new Date('2026-07-09').getTime() },
+    { id:'p5', type:'project', date:'2026-06-30', status:'done', title:'weather-cli', ext:'.rs',
+      body:"My first real Rust project — a command-line weather app that fits the forecast into a tiny box-drawing UI. Mostly built as an excuse to finally understand the borrow checker.\n\nIt took three attempts before the compiler and I agreed on who owned what. Worth it — I actually like Rust's error messages more than I expected to.",
+      tags:['rust','api','learning'], createdAt: new Date('2026-06-30').getTime() },
+    { id:'p6', type:'note', date:'2026-06-24', status:'', title:'today', ext:'.md',
+      body:"Rubber-ducked a bug to my actual rubber duck for ten minutes before realizing the duck was right and I was passing the wrong index.",
+      tags:['rubber-duck','oops'], createdAt: new Date('2026-06-24').getTime() },
+  ];
+
+  let allPosts = [...seedPosts];
   let currentFilter = 'all';
 
-  // ---------- filter (applies to all posts, static + custom) ----------
-  function applyFilter(){
-    document.querySelectorAll('.post').forEach(post => {
-      const match = currentFilter === 'all' || post.dataset.type === currentFilter;
-      post.style.display = match ? '' : 'none';
+  const feed = document.getElementById('feed');
+  const homeView = document.getElementById('homeView');
+  const postView = document.getElementById('postView');
+  const postPageCard = document.getElementById('postPageCard');
+  const navButtons = document.querySelectorAll('.nav button');
+
+  function escapeHtml(str){
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  function excerpt(text, len){
+    const clean = text.trim();
+    if (clean.length <= len) return clean;
+    return clean.slice(0, len).trim() + '…';
+  }
+
+  function updateStats(){
+    document.getElementById('statProjects').textContent = allPosts.filter(p => p.type === 'project' && p.status === 'done').length;
+    document.getElementById('statNotes').textContent = allPosts.filter(p => p.type === 'note').length;
+    document.getElementById('statWip').textContent = allPosts.filter(p => p.type === 'project' && p.status === 'wip').length;
+  }
+
+  // ---------- render homepage snippets ----------
+  function renderFeed(){
+    feed.innerHTML = '';
+    const visible = allPosts.filter(p => currentFilter === 'all' || p.type === currentFilter);
+
+    if (!visible.length){
+      feed.innerHTML = '<div class="empty-state">no posts here yet</div>';
+      return;
+    }
+
+    visible.forEach(data => {
+      const article = document.createElement('article');
+      article.className = 'post';
+      article.dataset.type = data.type;
+
+      const tagsHtml = data.tags.filter(t => t.trim().length)
+        .map(t => `<span class="tag">${escapeHtml(t.trim())}</span>`).join('');
+
+      const statusHtml = data.type === 'project'
+        ? `<span class="status ${data.status}">${data.status === 'done' ? 'shipped' : 'in progress'}</span>`
+        : '';
+
+      article.innerHTML = `
+        <div class="post-meta">
+          <span class="kind ${data.type}">${data.type}</span>
+          <span>${data.date}</span>
+          ${statusHtml}
+        </div>
+        <a class="post-title-link" href="#post-${data.id}">
+          <div class="post-title">${escapeHtml(data.title)}<span class="ext">${escapeHtml(data.ext)}</span></div>
+        </a>
+        <p class="post-body">${escapeHtml(excerpt(data.body, 160))}</p>
+        <a class="read-more mono" href="#post-${data.id}">read full post &rarr;</a>
+        <div class="tags">${tagsHtml}</div>
+      `;
+      feed.appendChild(article);
     });
   }
+
   navButtons.forEach(btn => {
     btn.addEventListener('click', () => {
       navButtons.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       currentFilter = btn.dataset.filter;
-      applyFilter();
+      renderFeed();
     });
   });
 
-  // ---------- modal open/close ----------
-  const overlay = document.getElementById('modalOverlay');
+  // ---------- render single post page ----------
+  function renderPostPage(id){
+    const data = allPosts.find(p => p.id === id);
+    if (!data){
+      postPageCard.innerHTML = '<div class="empty-state">post not found</div>';
+      return;
+    }
+    postPageCard.dataset.type = data.type;
+
+    const tagsHtml = data.tags.filter(t => t.trim().length)
+      .map(t => `<span class="tag">${escapeHtml(t.trim())}</span>`).join('');
+
+    const statusHtml = data.type === 'project'
+      ? `<span class="status ${data.status}">${data.status === 'done' ? 'shipped' : 'in progress'}</span>`
+      : '';
+
+    postPageCard.innerHTML = `
+      <div class="post-meta">
+        <span class="kind ${data.type}">${data.type}</span>
+        <span>${data.date}</span>
+        ${statusHtml}
+      </div>
+      <div class="post-page-title">${escapeHtml(data.title)}<span class="ext">${escapeHtml(data.ext)}</span></div>
+      <div class="tags" style="margin-bottom:6px;">${tagsHtml}</div>
+      <div class="post-page-body">${escapeHtml(data.body)}</div>
+    `;
+  }
+
+  // ---------- router ----------
+  const COMPOSE_KEY = 'compose-7f3a';
   const openBtn = document.getElementById('openModal');
+  const overlay = document.getElementById('modalOverlay');
+
+  function handleRoute(){
+    const hash = window.location.hash.replace('#','');
+
+    if (hash.startsWith('post-')){
+      const id = hash.slice(5);
+      homeView.style.display = 'none';
+      postView.classList.add('active');
+      openBtn.style.display = 'none';
+      renderPostPage(id);
+      window.scrollTo(0,0);
+      return;
+    }
+
+    postView.classList.remove('active');
+    homeView.style.display = '';
+
+    if (hash === COMPOSE_KEY){
+      openBtn.style.display = '';
+    } else {
+      openBtn.style.display = 'none';
+      if (overlay.classList.contains('open')) closeModal();
+    }
+  }
+  window.addEventListener('hashchange', handleRoute);
+
+  // ---------- modal open/close ----------
   const closeBtn = document.getElementById('closeModal');
   const cancelBtn = document.getElementById('cancelModal');
   const form = document.getElementById('postForm');
@@ -614,7 +681,6 @@
   overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && overlay.classList.contains('open')) closeModal(); });
 
-  // ---------- styled radio-pill toggles ----------
   function resetRadios(){
     document.querySelectorAll('.radio-opt').forEach(opt => {
       const input = opt.querySelector('input');
@@ -624,52 +690,13 @@
   document.querySelectorAll('.radio-opt').forEach(opt => {
     opt.addEventListener('click', () => {
       const name = opt.querySelector('input').name;
-      document.querySelectorAll(`input[name="${name}"]`).forEach(inp => {
-        inp.parentElement.classList.remove('checked');
-      });
+      document.querySelectorAll(`input[name="${name}"]`).forEach(inp => inp.parentElement.classList.remove('checked'));
       opt.querySelector('input').checked = true;
       opt.classList.add('checked');
     });
   });
 
-  // ---------- build a post DOM node from data ----------
-  function buildPostEl(data){
-    const article = document.createElement('article');
-    article.className = 'post';
-    article.dataset.type = data.type;
-
-    const tagsHtml = data.tags
-      .filter(t => t.trim().length)
-      .map(t => `<span class="tag">${escapeHtml(t.trim())}</span>`)
-      .join('');
-
-    const statusHtml = data.type === 'project'
-      ? `<span class="status ${data.status}">${data.status === 'done' ? 'shipped' : 'in progress'}</span>`
-      : '';
-
-    article.innerHTML = `
-      <div class="post-meta">
-        <span class="kind ${data.type}">${data.type}</span>
-        <span>${data.date}</span>
-        ${statusHtml}
-      </div>
-      <div class="post-title">${escapeHtml(data.title)}<span class="ext">${escapeHtml(data.ext)}</span></div>
-      <p class="post-body">${escapeHtml(data.body)}</p>
-      <div class="tags">${tagsHtml}</div>
-    `;
-    return article;
-  }
-
-  function escapeHtml(str){
-    const div = document.createElement('div');
-    div.textContent = str;
-    return div.innerHTML;
-  }
-
-  function todayStr(){
-    const d = new Date();
-    return d.toISOString().slice(0,10);
-  }
+  function todayStr(){ return new Date().toISOString().slice(0,10); }
 
   // ---------- persistence ----------
   async function loadCustomPosts(){
@@ -683,7 +710,6 @@
           if (res && res.value) entries.push(JSON.parse(res.value));
         }catch(e){ /* skip unreadable entry */ }
       }
-      entries.sort((a,b) => (b.createdAt || 0) - (a.createdAt || 0));
       return entries;
     }catch(e){
       console.error('Could not load saved posts:', e);
@@ -692,21 +718,13 @@
   }
 
   async function savePost(data){
-    const key = `post:${data.createdAt}`;
+    const key = `post:${data.id}`;
     try{
       const result = await window.storage.set(key, JSON.stringify(data), false);
       if (!result) console.error('Save returned no result');
     }catch(e){
       console.error('Storage error while saving post:', e);
     }
-  }
-
-  async function renderSavedPosts(){
-    const saved = await loadCustomPosts();
-    saved.forEach(data => {
-      feed.insertBefore(buildPostEl(data), feed.firstChild);
-    });
-    applyFilter();
   }
 
   // ---------- form submit ----------
@@ -722,37 +740,25 @@
 
     if (!title || !body) return;
 
-    const data = {
-      type, status, title, ext, body, tags,
-      date: todayStr(),
-      createdAt: Date.now()
-    };
+    const createdAt = Date.now();
+    const data = { id:`c${createdAt}`, type, status, title, ext, body, tags, date: todayStr(), createdAt };
 
-    feed.insertBefore(buildPostEl(data), feed.firstChild);
-    applyFilter();
+    allPosts = [data, ...allPosts];
+    renderFeed();
+    updateStats();
     closeModal();
 
     await savePost(data);
   });
 
-  // ---------- private compose route ----------
-  // The "+ new post" button (and modal) only ever appear when this page is
-  // opened with the secret hash below. Share the plain URL publicly and
-  // keep the "#compose" version for yourself — visitors to the plain link
-  // never see any hint that a posting page exists.
-  const COMPOSE_KEY = 'compose-7f3a';
-
-  function checkComposeAccess(){
-    const isCompose = window.location.hash.replace('#','') === COMPOSE_KEY;
-    openBtn.style.display = isCompose ? '' : 'none';
-    if (!isCompose && overlay.classList.contains('open')) closeModal();
-  }
-
-  window.addEventListener('hashchange', checkComposeAccess);
-  checkComposeAccess();
-
   // ---------- init ----------
-  renderSavedPosts();
+  (async function init(){
+    const saved = await loadCustomPosts();
+    allPosts = [...saved, ...seedPosts].sort((a,b) => b.createdAt - a.createdAt);
+    renderFeed();
+    updateStats();
+    handleRoute();
+  })();
 </script>
 
 </body>
