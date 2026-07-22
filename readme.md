@@ -1,3 +1,3 @@
 Homepage shows a short snippet of each post (title, meta, ~160-character excerpt, tags) with a "read full post →" link.
 Clicking a post's title or that link takes you to its own dedicated page ("#post-id") with the complete content, full tag list, and a "← back to all posts" link.
-New posts you publish through the compose view (#________, same as before) automatically get their own page too — no extra setup needed.
+New posts you publish through the compose view (#_________, same as before) automatically get their own page too — no extra setup needed.
